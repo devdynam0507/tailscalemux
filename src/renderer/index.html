@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+    <title>Tailscale Switcher</title>
+    <link rel="stylesheet" href="../../node_modules/@xterm/xterm/css/xterm.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside id="sidebar">
+        <div class="drag-region"></div>
+        <header class="side-head">
+          <h1>Tailnets</h1>
+          <button id="refresh" title="새로고침">⟳</button>
+        </header>
+        <ul id="profiles"></ul>
+
+        <header class="side-head">
+          <h1>원격 호스트</h1>
+          <button id="add-host" title="호스트 추가">＋</button>
+        </header>
+        <ul id="hosts"></ul>
+        <form id="host-form" hidden autocomplete="off">
+          <input id="hf-label" placeholder="이름 (예: build-server)" required />
+          <input id="hf-target" placeholder="대상 (MagicDNS 이름 또는 IP)" required />
+          <input id="hf-user" placeholder="사용자 (선택)" />
+          <input id="hf-session" placeholder="세션 이름 (비우면 마지막 세션 그대로)" />
+          <select id="hf-profile">
+            <option value="">tailnet 자동 전환 안 함</option>
+          </select>
+          <div class="hf-actions">
+            <button type="submit">저장</button>
+            <button type="button" id="hf-cancel">취소</button>
+          </div>
+        </form>
+
+        <button id="go-local" title="내장 로컬 터미널로">⟵ 로컬 터미널</button>
+        <div id="status" class="status"></div>
+      </aside>
+      <main id="main">
+        <div class="toolbar">
+          <span id="current-label">—</span>
+          <span class="spacer"></span>
+          <button id="open-iterm">iTerm2에서 열기</button>
+          <button id="clear-term">터미널 클리어</button>
+        </div>
+        <div id="tmux-bar">
+          <div id="tmux-tabs"></div>
+          <span class="spacer"></span>
+          <button id="tmux-split-h" title="좌우 분할 (⌘D)">⬌</button>
+          <button id="tmux-split-v" title="상하 분할 (⌘⇧D)">⬍</button>
+          <button id="tmux-new" title="새 창/탭 (⌘T)">＋창</button>
+        </div>
+        <div id="terminal"></div>
+      </main>
+    </div>
+
+    <script src="../../node_modules/@xterm/xterm/lib/xterm.js"></script>
+    <script src="../../node_modules/@xterm/addon-fit/lib/addon-fit.js"></script>
+    <script src="../../node_modules/@xterm/addon-web-links/lib/addon-web-links.js"></script>
+    <script src="renderer.js"></script>
+  </body>
+</html>

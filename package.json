@@ -1,0 +1,42 @@
+{
+  "name": "tailscale-switcher",
+  "version": "0.1.0",
+  "description": "tailscalemux — switch between Tailscale accounts with a built-in tmux terminal, per-host remote sessions, and iTerm2 hand-off",
+  "main": "src/main.js",
+  "author": "devdynam0507",
+  "license": "MIT",
+  "homepage": "https://github.com/devdynam0507/tailscalemux",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devdynam0507/tailscalemux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/devdynam0507/tailscalemux/issues"
+  },
+  "keywords": [
+    "tailscale",
+    "tmux",
+    "terminal",
+    "ssh",
+    "electron",
+    "macos",
+    "xterm"
+  ],
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild -f -w node-pty",
+    "postinstall": "electron-rebuild -f -w node-pty",
+    "package": "electron-packager . 'Tailscale Switcher' --platform=darwin --arch=arm64 --out=dist --overwrite --asar=false --app-bundle-id=io.github.devdynam0507.tailscalemux --app-category-type=public.app-category.developer-tools"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-web-links": "0.12.0",
+    "@xterm/xterm": "^5.5.0",
+    "node-pty": "^1.0.0"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.0.1",
+    "@electron/rebuild": "^3.7.0",
+    "electron": "^33.2.0"
+  }
+}

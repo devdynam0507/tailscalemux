@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../src/renderer/styles.css" />
+    <style>
+      /* Screenshot mock only — fakes the xterm pane with sample (non-real) data */
+      body { width: 1100px; height: 720px; }
+      #terminal {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 12.5px;
+        color: #e6e8ec;
+        display: flex;
+        position: relative;
+        padding: 0;
+      }
+      .pane { flex: 1; padding: 10px 12px; white-space: pre-wrap; line-height: 1.5; }
+      .pane.left { border-right: 1px solid #2b2f39; }
+      .dim { color: #9aa3b2; }
+      .grn { color: #4fd6a3; }
+      .yel { color: #e2c08d; }
+      .lnk { color: #6cb6ff; text-decoration: underline; }
+      .cur { background: #4fd6a3; color: #16181d; }
+      .tstatus {
+        position: absolute; left: 0; right: 0; bottom: 0;
+        background: #2f5d4e; color: #e6e8ec; font-size: 11px;
+        padding: 2px 10px; display: flex; justify-content: space-between;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <aside id="sidebar">
+        <div class="drag-region"></div>
+        <header class="side-head"><h1>Tailnets</h1><button id="refresh">⟳</button></header>
+        <ul id="profiles">
+          <li class="profile current">
+            <div class="tailnet"><span class="dot"></span>personal</div>
+            <div class="meta">you@example.com · a1b2</div>
+          </li>
+          <li class="profile">
+            <div class="tailnet"><span class="dot"></span>work</div>
+            <div class="meta">you@example.com · c3d4</div>
+          </li>
+          <li class="profile">
+            <div class="tailnet"><span class="dot"></span>homelab</div>
+            <div class="meta">you@example.com · e5f6</div>
+          </li>
+        </ul>
+
+        <header class="side-head"><h1>원격 호스트 · Remote hosts</h1><button id="add-host">＋</button></header>
+        <ul id="hosts">
+          <li class="profile host current">
+            <div class="row"><div class="tailnet"><span class="dot"></span>build-server</div><button class="del">×</button></div>
+            <div class="meta">ci@build-server.tailnet.ts.net · work · claude</div>
+          </li>
+          <li class="profile host">
+            <div class="row"><div class="tailnet"><span class="dot"></span>gpu-box</div><button class="del">×</button></div>
+            <div class="meta">dev@100.x.y.z · homelab · 마지막 세션</div>
+          </li>
+          <li class="profile host">
+            <div class="row"><div class="tailnet"><span class="dot"></span>nas</div><button class="del">×</button></div>
+            <div class="meta">admin@nas.tailnet.ts.net · homelab · 마지막 세션</div>
+          </li>
+        </ul>
+
+        <button id="go-local">⟵ 로컬 터미널</button>
+        <div id="status" class="status">상태: Running
+build-server.tailnet.ts.net
+100.x.y.z</div>
+      </aside>
+
+      <main id="main">
+        <div class="toolbar">
+          <span id="current-label">🖥 build-server</span>
+          <span class="spacer"></span>
+          <button id="open-iterm">iTerm2에서 열기</button>
+          <button id="clear-term">터미널 클리어</button>
+        </div>
+        <div id="tmux-bar">
+          <div id="tmux-tabs"><span class="tmux-empty">🖥 build-server — ⌘D 분할</span></div>
+          <span class="spacer"></span>
+          <button>⬌</button><button>⬍</button><button>＋창</button>
+        </div>
+        <div id="terminal">
+          <div class="pane left"><span class="grn">ci@build-server</span> ~/app <span class="dim">$</span> claude
+
+<span class="yel">✻ Claude Code</span> <span class="dim">v2.x</span>
+<span class="dim">  cwd: ~/app   model: Opus 4.x</span>
+
+<span class="grn">▸</span> refactor the auth middleware and run the tests
+
+  <span class="dim">· reading</span> src/auth/middleware.ts
+  <span class="dim">· editing</span> src/auth/middleware.ts  <span class="grn">+24 −11</span>
+  <span class="dim">· running</span> npm test
+    <span class="grn">✓ 142 passed</span>  <span class="dim">(3.4s)</span>
+
+<span class="grn">▸</span> <span class="cur"> </span></div>
+          <div class="pane right"><span class="dim"># build log — survives tailnet switches</span>
+<span class="dim">[12:01]</span> watching for changes…
+<span class="dim">[12:03]</span> rebuild ok  <span class="grn">✓</span>
+<span class="dim">[12:04]</span> deployed to staging
+
+<span class="dim"># login from a remote? just click:</span>
+<span class="lnk">https://example.com/oauth/authorize?...</span>
+
+<span class="dim">~ $</span> <span class="cur"> </span>
+
+
+<span class="tstatus"><span>[0] 0:claude*  1:logs</span><span>build-server 12:04</span></span></div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
